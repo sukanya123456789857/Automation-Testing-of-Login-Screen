@@ -1,0 +1,39 @@
+1. Test the Login Functionality
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+public class LoginTest {
+    WebDriver driver;
+    
+    @BeforeClass
+    public void setup() {
+        // Set up ChromeDriver path
+        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+        driver = new ChromeDriver();
+        driver.get("https://germanyiscalling.com/login");
+    }
+
+    @Test
+    public void testSuccessfulLogin() {
+        // Enter valid email and password
+        driver.findElement(By.id("email")).sendKeys("valid@example.com");
+        driver.findElement(By.id("password")).sendKeys("validPassword");
+
+        // Click login button
+        driver.findElement(By.id("loginButton")).click();
+
+        // Verify redirection to landing page
+        String expectedUrl = "https://germanyiscalling.com/dashboard";
+        Assert.assertEquals(driver.getCurrentUrl(), expectedUrl, "Login failed or redirection failed.");
+    }
+    
+    @AfterClass
+    public void teardown() {
+        driver.quit();
+    }
+}

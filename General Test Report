@@ -1,0 +1,33 @@
+General Test Report
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
+
+public class LoginTest {
+    ExtentReports extent;
+    ExtentTest test;
+    
+    @BeforeClass
+    public void setupReporting() {
+        ExtentSparkReporter spark = new ExtentSparkReporter("target/SparkReport.html");
+        extent = new ExtentReports();
+        extent.attachReporter(spark);
+        test = extent.createTest("Login Tests");
+    }
+
+    @Test
+    public void testSuccessfulLogin() {
+        try {
+            // Execute successful login test
+            // Report pass or fail
+            test.pass("Successfully logged in and redirected.");
+        } catch (Exception e) {
+            test.fail("Login test failed due to " + e.getMessage());
+        }
+    }
+    
+    @AfterClass
+    public void closeReporting() {
+        extent.flush();
+    }
+}
